@@ -1,0 +1,31 @@
+<html>
+<head>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+ .circleClass{
+   fill:deeppink;
+   stroke:green;
+   stroke-width:5;
+ }
+</style>
+</head>
+<body>
+<button onclick="addCircleClass();">Do</button>
+<button onclick="removeCircleClass();">Undo</button>
+<br/><br/>
+<svg width=600 height=600>
+   <circle cx=200 cy=50 r=40></circle>
+   <circle cx=200 cy=150 r=40></circle>
+   <circle cx=200 cy=250 r=40></circle>
+   <circle cx=200 cy=350 r=40></circle>
+</svg>
+<script>
+  function addCircleClass(){
+     d3.selectAll("circle").classed("circleClass",true);
+  }
+  function removeCircleClass(){
+     d3.selectAll("circle").classed("circleClass",false);
+  }
+</script>
+</body>
+</html>
