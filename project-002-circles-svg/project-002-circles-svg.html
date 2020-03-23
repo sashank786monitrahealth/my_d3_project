@@ -1,0 +1,22 @@
+<html>
+<head>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<button onclick="callMe();">Click me.</button>
+  <svg width=600 height=400>
+    <circle cx="80"cy="50" r="40"></circle>
+    <circle cx="170"cy="50" r="40"></circle>
+    <circle cx="260"cy="50" r="40"></circle>
+    <circle cx="350"cy="50" r="40"></circle>
+  </svg>
+<script>
+function callMe(){
+   d3.selectAll("circle").style("fill","green").style("opacity",function(){
+      return Math.random();
+   });
+}
+</script>
+</body>
+</html>
