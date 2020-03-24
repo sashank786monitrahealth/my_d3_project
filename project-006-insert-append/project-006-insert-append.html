@@ -1,0 +1,22 @@
+<html>
+<head>
+     <title>Insert and Update Demo</title>
+     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<button onclick="append();">Append Para</button>
+<br/><br/>
+   <div id="parent">
+      <p>Para 001</p>
+      <p>Para 002</p>
+      <p>Para 003</p>
+      <p>Para 004</p>
+   </div>
+<script type="text/javascript">
+function append(){
+  d3.select("#parent").append("p").text("Para 005").style("font-weight","bold");
+}
+</script>
+</body>
+</html>

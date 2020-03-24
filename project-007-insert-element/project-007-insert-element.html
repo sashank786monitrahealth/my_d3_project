@@ -1,0 +1,22 @@
+<html>
+<head>
+     <title>Insert Demo</title>
+     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<button onclick="insertElem();">Insert</button>
+<br/><br/>
+   <div id="parent">
+      <p>Para 001</p>
+      <p>Para 002</p>
+      <p>Para 003</p>
+      <p>Para 004</p>
+   </div>
+<script type="text/javascript">
+function insertElem(){
+  d3.select("#parent").insert("p","p:nth-child(1)").text("Para insert").style("font-weight","bold");
+}
+</script>
+</body>
+</html>
