@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>Demo - Add SVG on the fly</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<button onclick="putSVGElement();">Click Me.</button><br/><br/>
+<script type ="text/javascript">
+function putSVGElement(){
+   svg = d3.select("body").append("svg").attr("width","200").attr("height",200).style("background","skyblue");
+   g = svg.append("g").attr("transform","translate(40,40)");
+   g.append("circle").attr("r",30).style("fill","yellow");
+   g.append("circle").attr("cx",100).attr("r",30).style("fill","yellow");
+}
+</script>
+</body>
+</html>
