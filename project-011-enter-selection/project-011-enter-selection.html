@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>
+Demo - Enter Selection
+</title>
+<!--<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script> 
+<style>
+   .person {
+       color:lime;
+       font-size:40px;
+     } 
+</style>
+</head>
+
+<!--write body below this-->
+<body>
+      <p>Chair 1</p>
+      <p>Chair 2</p>
+      <p>Chair 3</p>
+      <p>Chair 4</p>
+      <p>Chair 5</p>
+      <p>Chair 6</p>
+   <script>
+   var myData = [10,20,30,40,50,60,70,80,90,100];
+      updateSelection = d3.selectAll("p").data(myData);
+      updateSelection.enter().append("p");
+      updateSelection.text(function(d,i){return "Person"+" "+d;}).classed("person",true);
+   </script>
+</body>
+</html>
