@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Enter Update Exit</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<style>
+circle{
+   stroke:lime;
+   stroke-width:5px;
+   fill:indigo;
+   r:40px;
+}
+</style>
+<body>
+<svg height =1500 width=1500>
+<g id="myGroup" transform="translate(40,0)">
+
+</g>
+</svg>
+<script type="text/javascript">
+   var myData = ["1","2","3","4","5","6","7","8","9","10"];
+   var update = d3.select("#myGroup").selectAll("circle").data(myData);
+   update.exit().remove();
+   update.enter().append("circle").merge(update).attr("cy",function(d){return (d*100)+"px";});
+</script>
+</body>
+</html>
