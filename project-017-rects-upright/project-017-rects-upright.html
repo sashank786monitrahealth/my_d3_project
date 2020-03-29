@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>Enter Update Exit</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<style>
+rect{
+   stroke:yellow;
+   stroke-width:1px;
+   fill:indigo;
+   
+}
+</style>
+<body>
+<svg height =1500 width=1500>
+<g id="myGroup" transform="translate(40,0)">
+
+</g>
+</svg>
+<script type="text/javascript">
+   var myData = ["1","2","3","4","5","6","7","8","9","10"];
+   var maxData = d3.max(myData);
+   var minData = d3.min(myData);
+   var update = d3.select("#myGroup").selectAll("rect").data(myData);
+   update.exit().remove();
+   update.enter().append("rect").merge(update).attr("x",function(i,d){return (i*30)+"px";})
+                                              .attr("y",function(i,d){return ((maxData*50)-(d*50))+"px";})
+                                              .attr("width","10px")
+                                              .attr("height",function(i,d){return (d*50)+"px";});
+</script>
+</body>
+</html>
