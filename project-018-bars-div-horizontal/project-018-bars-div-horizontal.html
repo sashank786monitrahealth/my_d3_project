@@ -1,0 +1,25 @@
+<html>
+<head>
+<title></title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+div{
+ height:25px;
+ background:indigo;
+ margin:15px;
+ color:yellow;
+ text-align:right;
+ line-height:25px;
+}
+</style>
+</head>
+<!--below is the body-->
+<body>
+	<script>
+         var numbers = [31,25,35,18,9,14];
+         var bars = d3.select("body").selectAll("div").data(numbers);
+         bars.enter().append("div").style("width",function(d,i){ return (d*10)+"px";})
+                     .text(function(d){return d;})
+        </script>
+</body>
+</html>
