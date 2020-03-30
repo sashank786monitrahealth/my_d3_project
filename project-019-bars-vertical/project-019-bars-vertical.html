@@ -1,0 +1,38 @@
+<html>
+<head>
+<title></title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+
+</style>
+</head>
+<!--head above-->
+<!--body below-->
+<body>
+<script type="text/javascript">
+var myData = [31,21,45,12,16,42];
+var svg = d3.select("body").append("svg").style("background-color","bisque")
+                                         .attr("width","1000")
+                                         .attr("height","1000");
+
+var group = svg.append("g");
+var rectangles = group.selectAll("rect").data(myData);
+    rectangles.enter().append("rect").attr("x",function(d,i){return ((i+1)*50)+"px";})
+                                     .attr("y",function(d,i){return (500-(10*d))+"px";})
+                                     .attr("height",function(d,i){return ((10*d))+"px";})
+                                     .attr("width","30px")
+                                     .attr("fill","indigo")
+                                     .attr("stroke-width","5px")
+                                     .attr("stroke","lime");
+
+
+var labels = group.selectAll("text").data(myData);
+    labels.enter().append("text").text(function(d){return d;})
+                  .style("stroke","red")
+                  .attr("x",function(d,i){return (((i+1)*50)+10)+"px";})
+                  .attr("y",function(d,i){return (500-(10*d)-10)+"px";});
+               
+</script>
+
+</body>
+</html>
