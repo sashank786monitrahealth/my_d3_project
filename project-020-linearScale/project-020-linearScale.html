@@ -1,0 +1,38 @@
+<html>
+<head>
+<title></title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var yScale = d3.scaleLinear()
+               .domain([-20,100])
+               .range([0,800])
+
+var myData = [31,41,21,11,51,12];
+
+for ( i=0 ; i < myData.length ; i++){
+    console.log("d = "+myData[i]+"px  -- "+"yScale(d) = "+yScale(myData[i])+"px");
+}
+
+var svg = d3.select("body").append("svg")
+                           .attr("width","800px")
+                           .attr("height","800px")
+                           .style("background-color","bisque");
+var group = svg.append("g").attr("transform","translate(20,20)");
+var rect = group.selectAll("rect")
+                               .data(myData).enter()
+                               .append("rect")
+                               .attr("x",function(d,i){return (i*40)+"px";})
+                               .attr("y",function(d,i){ return (yScale(d))+"px";})
+                               .attr("width","30px")
+                               .attr("height",function(d,i){return (700-yScale(d))+"px";})
+                               .attr("fill","lime")
+
+
+</script>
+
+</body>
+</html>
