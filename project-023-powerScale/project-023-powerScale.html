@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Demo:PowerScale (scalePow)</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var myData = [10,20,30,40,50,60,70,80,90,100];
+
+var yScale = d3.scaleLinear()
+               .domain([d3.min(myData,function(d){return (d-50);}),d3.max(myData,function(d){return (d+50);})])
+               .range([0,800]);
+
+
+var yColorScale = d3.scaleLinear()
+               .domain([d3.min(myData,function(d){return (d-50);}),d3.max(myData,function(d){return (d+50);})])
+               .range(["blue","lime"]);
+
+
+var yPowerScale = d3.scalePow().exponent(2)
+               .domain([0,150])
+               .range([0,800]);
+
+
+console.log("Min Val = "+d3.min(myData,function(d){return d;}));
+console.log("Max Val = "+d3.max(myData,function(d){return d;}));
+
+
+
+for ( i=0 ; i < myData.length ; i++){
+    console.log("d = "+myData[i]+"px  -- "+"yPowerScale(d) = "+yPowerScale(myData[i])+"px");
+}
+
+var svg = d3.select("body").append("svg")
+                           .attr("width","800px")
+                           .attr("height","800px")
+                           .style("background-color","bisque");
+var group = svg.append("g").attr("transform","translate(20,20)");
+var rect = group.selectAll("rect")
+                               .data(myData).enter()
+                               .append("rect")
+                               .attr("x",function(d,i){return (i*40)+"px";})
+                               .attr("y",function(d,i){ return (800-yPowerScale(d))+"px";})
+                               .attr("width","30px")
+                               .attr("height",function(d,i){return (yPowerScale(d))+"px";})
+                               .attr("fill",function(d){return yColorScale(d);});
+
+
+</script>
+
+</body>
+</html>
