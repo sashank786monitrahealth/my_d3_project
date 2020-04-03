@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Demo - Sequential Scales</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<!--body below-->
+<body>
+<script type="text/javascript">
+  var width = 800;
+  var height = 400;
+  var myData = d3.range(0,110,10);
+  var linearScale = d3.scaleLinear()
+                      .domain([0,130])
+                      .range([0,width]);
+/*  
+  var colorScale = d3.scaleSequential()
+                     .domain([0,100])
+                     //.interpolator(d3.interpolateCool);
+                     .interpolator(d3.interpolate("red","blue"));
+*/
+  
+  var colorScale = d3.scaleSequential(d3.interpolatePlasma)
+                     .domain([0,100]);
+                     //.interpolator(d3.interpolateMagma);;
+
+  var svg = d3.select("body")
+              .append("svg")
+              .attr("width",width)
+              .attr("height",height)
+              .style("background-color","lightgreen");
+  
+  var group = svg.append("g")
+                 .attr("transform","translate(60,0)");
+
+  var circles = group.selectAll("circle")
+                     .data(myData);
+  
+  circles.enter().append("circle")
+                 .attr("r",50)
+                 .attr("cx",function(d){ return linearScale(d);})
+                 .attr("cy",100)
+                 .style("fill",function(d){return colorScale(d);});
+                     
+  
+</script>
+</body>
+</html>
