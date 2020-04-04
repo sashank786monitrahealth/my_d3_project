@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Demo - Scales Quantize</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<!--body below-->
+<body>
+
+<script type="text/javascript">
+   var quantizeData = [1,15,26,48,51,57,63,79,82,99];
+   var outputRange = ["red","yellow","lime","green","indigo"];
+   var quantizeScale = d3.scaleQuantize()
+                         .domain([0,100])
+                         .range(outputRange);
+
+var yScale = d3.scaleLinear()
+               .domain([d3.min(quantizeData,function(d){return (d-50);}),d3.max(quantizeData,function(d){return (d+50);})])
+               .range([0,800]);
+
+
+var svg = d3.select("body").append("svg")
+                           .attr("width","800px")
+                           .attr("height","800px")
+                           .style("background-color","bisque");
+var group = svg.append("g").attr("transform","translate(20,20)");
+var rect = group.selectAll("rect")
+                               .data(quantizeData).enter()
+                               .append("rect")
+                               .attr("x",function(d,i){return (i*40)+"px";})
+                               .attr("y",function(d,i){ return (800-yScale(d))+"px";})
+                               .attr("width","30px")
+                               .attr("height",function(d,i){return (yScale(d))+"px";})
+                               .attr("fill",function(d){return quantizeScale(d);});
+
+
+
+</script>
+</body>
+</html>
