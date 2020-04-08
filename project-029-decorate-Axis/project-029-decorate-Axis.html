@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>demo - axis decorator</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+g path, g line{
+         stroke:darkorchid;
+         stroke-width:3px;
+      }
+g text{
+         color:dodgerblue;
+         font-size:15px;
+      }
+</style>
+</head>
+<!--body below-->
+<body>
+
+
+<script type="text/javascript">
+
+   var width = 500;
+   var height = 500;
+   var spacing = 60;
+
+   var xScale = d3.scaleLinear()
+                  .domain([0,100])
+                  .range([0,width]);
+
+   var xAxis = d3.axisBottom()
+                 .scale(xScale)
+                 .tickValues([0,10,30,70,100])
+                 //.ticks(5)
+                 //.tickSizeOuter(15)
+                 //.tickSizeInner(10);
+                 .tickSize("8")
+                 .tickFormat(function(d){return d+"%"})
+                 .tickPadding("10");
+
+   var svg = d3.select("body")
+               .append("svg")
+               .attr("width",width)
+               .attr("height",height)
+               .style("padding","20px")
+               .style("background-color","honeydew");
+
+   var xAxisGroup = svg.append("g")
+                       .attr("transform","translate(0,470)")
+                       .call(xAxis);
+                
+</script>
+</body>
+</html>
