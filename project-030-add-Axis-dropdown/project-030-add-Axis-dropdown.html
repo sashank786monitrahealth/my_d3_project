@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>demo - add axis using dropdown menu</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+div{
+    margin: 5px;
+}
+</style>
+</head>
+<!--body below-->
+<body>
+    <div>
+<label for="x">Horizontal:</label>
+<select id="x" onchange="displayAxis();">
+    <option value="select">Select</option>
+    <option value="top">Top</option>
+    <option value="bottom">Bottom</option>
+</select>
+
+<label for="y">Vertical:</label>
+<select id="y" onchange="displayAxis();">
+        <option value="select">Select</option>
+    <option value="left">Left</option>
+    <option value="right">Right</option>
+</select>
+</div>
+    <script type="text/javascript">
+var width = 500 , height=500;
+
+var svg = d3.select("body").append("svg")
+            .attr("width",width)
+            .attr("height",height)
+            .style("background-color","lime")
+            .style("padding","40px");
+
+
+function displayAxis(){
+
+    d3.select("g").remove();
+    var xGroup = svg.append("g");
+    console.log(event.target.id);
+    var direction = document.getElementById(event.target.id).value;
+    var xScale = d3.scaleLinear()
+                  .domain([0,600])
+                  .range([0,width]);
+    var yScale = d3.scaleLinear()
+                  .domain([600,0])
+                  .range([0,width]);
+
+    var ourAxis = "";
+    if(direction == "top"){
+        ourAxis = d3.axisTop(xScale);
+        xGroup.attr("transform","translate(0,0)")
+              .call(ourAxis);
+    } else if (direction == "bottom"){
+        ourAxis = d3.axisBottom(xScale);
+        xGroup.attr("transform","translate(0,480)")
+              .call(ourAxis);
+    } else if (direction == "left"){
+        ourAxis = d3.axisLeft(yScale);
+        xGroup.attr("transform","translate(0,0)")
+              .call(ourAxis);
+    } else if (direction == "right"){
+        ourAxis = d3.axisRight(yScale);
+        xGroup.attr("transform","translate(480,0)")
+              .call(ourAxis);
+    }
+}
+
+</script>
+</body>
+</html>
