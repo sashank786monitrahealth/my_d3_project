@@ -1,0 +1,30 @@
+<html>
+    <head>
+<title>Demo-Line Generator</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+  path {
+      fill: none;
+      stroke:lime;
+      stroke-width:5px;
+  }
+</style>
+    </head>
+    <!--body below-->
+<body>
+    <script type="text/javascript">
+       var points = [[0,20],[100,250],[260,90],[450,40],[320,140]];
+       var width = 600, height = 500;
+       var svg = d3.select("body")
+                   .append("svg")
+                   .attr("width",width)
+                   .attr("height",height)
+                   .style("background-color","lavender");
+        var lineGroup = svg.append("g");
+        /*Begin: Line Generator Function Below*/
+        var line = d3.line(); 
+        /*End: Line Generator Function Below*/
+        lineGroup.append("path").attr("d",line(points))
+    </script>
+</body>
+</html>
