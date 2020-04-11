@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo - Line Generator Project</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        .line {
+            fill:none;
+            stroke-width:3px;
+        }
+    </style>
+</head>
+<body>
+ <script type="text/javascript">
+    var points1 = [[0,20],[100,250],[260,90],[450,40],[450,140]];
+    var points2 = [{x:100, y:100},{x:130, y:260},{x:300, y:460},{x:500, y:250}];
+
+    var width = 700, height=600;
+    var svg = d3.select("body").append("svg")
+                .attr("width",width).attr("height",height)
+                .style("background-color","lavender")
+                .style("padding","40px");
+
+    var xScale = d3.scaleLinear()
+                   .domain([0,600])
+                   .range([0,width]);
+
+    var yScale = d3.scaleLinear()
+                   .domain([0,600])
+                   .range([height,0]);
+    
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale);
+
+    var xAxisGroup = svg.append("g").attr("transform","translate(0,"+(height)+")");
+    var yAxisGroup = svg.append("g")//.attr("transform","translate(40,-40)");
+    
+    xAxisGroup.call(xAxis);
+    yAxisGroup.call(yAxis);
+    
+    var lineGroup1 = svg.append("g").attr("class","line")//.attr("transform","translate(40,0)");
+    var lineGroup2 = svg.append("g").attr("class","line")//.attr("transform","translate(40,0)");
+    
+    var line1 = d3.line()
+                  .x(function(d){return xScale(d[0]);})
+                  .y(function(d){return yScale(d[1])});
+    var line2 = d3.line()
+                  .x(function(d){ return xScale(d.x);})
+                  .y(function(d){return yScale(d.y);});
+    
+    lineGroup1.append("path").attr("d",line1(points1)).style("stroke","cyan");
+    lineGroup2.append("path").attr("d",line2(points2)).style("stroke","purple");
+
+ </script>
+</body>
+</html>
