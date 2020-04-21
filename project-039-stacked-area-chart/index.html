@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo - Stacked Area Chart</title>
+    <style></style>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    
+    <script type="text/javascript">
+
+       var data = [
+                    {year: 2000, desktops:80, laptops:210, printers:50, monitors:60},
+                    {year: 2001, desktops:130, laptops:150, printers:30, monitors:40},
+                    {year: 2002, desktops:40, laptops:200, printers:45, monitors:80},
+                    {year: 2003, desktops:70, laptops:180, printers:65, monitors:70},
+                    {year: 2004, desktops:100, laptops:160, printers:70, monitors:40},
+                    {year: 2005, desktops:90, laptops:190, printers:80, monitors:60},
+       ];
+
+
+       var width = 600, height = 500, spacing = 60;
+       var xMin = d3.min(data,function(d){return d.year;});
+       var xMax = d3.max(data,function(d){return d.year;});
+       var xScale = d3.scaleLinear()
+                      .domain([xMin, xMax])
+                      .range([0, width-spacing]);
+       var yScale = d3.scaleLinear()
+                      //.domain([])
+                      .range([(height-spacing),0]);
+       var svg = d3.select("body")
+                   .append("svg")
+                   .attr("width",width)
+                   .attr("height",height)
+                   .append("g")
+                   .attr("transform","translate("+(spacing/2)+","+(spacing/2)+")");
+
+       var xAxis = d3.axisBottom(xScale).ticks(6).tickFormat(d3.format("d"));
+       var xAxisGroup = svg.append("g")
+                      .attr("transform","translate("+0+","+(height-spacing)+")");
+       xAxisGroup.call(xAxis);
+
+       var stack = d3.stack().keys(["laptops","desktops","printers","monitors"]);
+       var colors = ["dodgerblue","silver","pink","purple"];
+       var stackedData   = stack(data);
+       //console.log(stackedData[3]);
+       //console.dir(stackedData);
+       yScale.domain([0,d3.max(stackedData[stackedData.length -1], function(d){return d[1];}) ]);
+       
+       var yAxis = d3.axisLeft(yScale);
+       var yAxisGroup = svg.append("g");
+       yAxisGroup.call(yAxis);
+
+       var area = d3.area()
+                    .x(function(d){return xScale(d.data.year);})
+                    .y0(function(d){return yScale(d[0]);})
+                    .y1(function(d){return yScale(d[1]);});
+
+        
+       var series = svg.selectAll("g.series")
+                       .data(stackedData)
+                       .enter()
+                       .append("g")
+                       .attr("class","series");
+
+       series.append("path")
+             .style("fill", function(d,i){return colors[i];})
+             .attr("d",function(d){return area(d);});
+
+
+    </script>
+</body>
+</html>
