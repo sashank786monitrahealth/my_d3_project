@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo - Arc Generator</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+    <style></style>
+</head>
+<body>
+    <script type="text/javascript">
+    var width = 700, height = 600, spacing=60,
+    fullAngle = 2* Math.PI, halfAngle = 1* Math.PI
+    , quarterAngle = fullAngle/4;
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width",width)
+                .attr("height",height)
+                .style("background-color","lightgreen");
+    
+    var svgGroup1 = svg.append("g")
+                      .attr("transform","translate(200,200)");
+    
+    var svgGroup2 = svg.append("g")
+                      .attr("transform","translate(400,200)");
+    
+    var svgGroup3 = svg.append("g")
+                      .attr("transform","translate(400,450)");
+
+    var circle = d3.arc()
+                   .innerRadius(70)
+                   .outerRadius(100)
+                   .startAngle(0)
+                   .endAngle(fullAngle);
+
+
+    var halfCircle = d3.arc()
+                   .innerRadius(60)
+                   .outerRadius(100)
+                   .startAngle(0)
+                   .endAngle(halfAngle);
+
+
+
+
+    var quarterCircle = d3.arc()({innerRadius:60,
+                                  outerRadius:100,
+                                  startAngle:0,
+                                  endAngle:quarterAngle 
+                                  });
+                                  
+                   /*.innerRadius(40)
+                   .outerRadius(100)
+                   .startAngle(0)
+                   .endAngle(quarterAngle);
+                  */
+
+    svgGroup1.append("path")
+       .attr("d",circle).attr("fill","gold");
+    
+    svgGroup2.append("path")
+       .attr("d",halfCircle).attr("fill","yellow");
+    
+    svgGroup3.append("path")
+       .attr("d",quarterCircle).attr("fill","violet");
+    </script>
+</body>
+</html>
