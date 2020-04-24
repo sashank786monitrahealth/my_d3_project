@@ -6,7 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Demo - Arc Generator - 002</title>
     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
-    <style></style>
+    <style>
+       text{
+              font-size:14px;
+              fill:white;
+              font-weight:bold;
+           }
+    </style>
 </head>
 <body>
     <script type="text/javascript">
@@ -21,11 +27,11 @@
                 .style("background-color","lightgreen");
 
     var data = [
-                 { startAngle:0, endAngle:1.5},
-                 { startAngle:1.5, endAngle:3.4},
-                 { startAngle:3.4, endAngle:4.2},
-                 { startAngle:4.2, endAngle:5.9},
-                 { startAngle:5.9, endAngle:6.28},
+                 {day:"Mon", startAngle:0, endAngle:0.9},
+                 {day:"Tue", startAngle:0.9, endAngle:2.4},
+                 {day:"Wed", startAngle:2.4, endAngle:4.2},
+                 {day:"Thu", startAngle:4.2, endAngle:5.0},
+                 {day:"Fri", startAngle:5.0, endAngle:6.28},
                ];
 
     var segments = d3.arc()
@@ -43,6 +49,23 @@
     svgGroup.enter().append("path")
                     .attr("d",segments)
                      .attr("fill","gray");
+    
+    var content = d3.select("g")
+                    .selectAll("text")
+                    .data(data);
+                    
+     content.enter()
+            .append("text")
+            .each(function(d){
+               var center = segments.centroid(d);
+               console.log(center);
+               d3.select(this)
+                 .attr("x", center[0])
+                 .attr("y", center[1])
+                 .attr("dx","-10px")
+                 .text(d.day);
+                 
+            });
                       
 
     </script>
