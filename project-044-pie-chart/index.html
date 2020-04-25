@@ -7,11 +7,15 @@
     <title>Demo- Pie Chart with Legend</title>
     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
 <style>
-text{
+.inside{
     font-size:25px;
-    font-family: Arial, Helvetica, sans-serif
+    font-family: Arial, Helvetica, sans-serif;
     font-weight:bold;
     fill:white;
+}
+.legends{
+    font-size:25px;
+    font-weight:bold;
 }
 </style>
 
@@ -20,13 +24,14 @@ text{
 <body>
     
 <script type="text/javascript">
-    var width = 600, height = 500;
+    var width = 750, height = 600;
 
     var colors = d3.scaleOrdinal(d3.schemeDark2);
     var svg = d3.select("body")
                 .append("svg")
                 .attr("width",width)
-                .attr("height",height);
+                .attr("height",height)
+                .style("background-color","lime");
 
     var details = [
                     {grade:"A+", number:8},
@@ -63,6 +68,7 @@ text{
 
      content.enter()
             .append("text")
+            .classed("inside",true)
             .each(function(d){
                 var center = segments.centroid(d);
                 d3.select(this)
@@ -73,7 +79,23 @@ text{
                   
             })
 
+     var legends = svg.append("g")
+                      .attr("transform","translate(500,100)")
+                      .selectAll(".legends")
+                      .data(data);
 
+     var legend = legends.enter()
+                         .append("g")
+                         .classed("legends",true)
+                         .attr("transform",function(d,i){return "translate(0,"+((i+1)*30)+")";});
+
+     legend.append("rect").attr("width",20).attr("height",20)
+                          .attr("fill",function(d){return colors(d.data.number);});
+
+     legend.append("text").text(function(d){return d.data.grade;})
+                          .attr("fill",function(d){return colors(d.data.number);})
+                          .attr("x",30)
+                          .attr("y",20);
     
 </script>
 </body>
