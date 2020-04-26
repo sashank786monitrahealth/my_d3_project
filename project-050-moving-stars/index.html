@@ -26,10 +26,15 @@
       
       
       var items = svg.selectAll("path").data(positions);
-          items.enter().append("path").attr("transform", function(d){
+          items.enter().append("path")
+                       .transition().duration(5000)
+                       .attr("transform", function(d){
                          return "translate("+d[0]+","+d[1]+")";
                      }).attr("d",stars)
                      .style("fill","deeppink");
+
+
+
     </script>
 </body>
 </html>
