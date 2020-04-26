@@ -25,22 +25,32 @@
                       .attr("stroke","deeppink")
                       .attr("stroke-width","10px");
 
-      d3.select("circle")
-        .transition()
-        .duration(2000)
-        .attr("cx","500px")
-        .attr("cy","400px")
-        .attr("r","80px")
-        .transition()
-        .duration(2000)
-        .attr("fill","deeppink")
-        .attr("stroke","yellow")
-        .attr("stroke-width","10px")
-        .transition()
-        .duration(2000)
-        .attr("cx","100px")
-        .attr("cy","100px")
-        .attr("r","50px");
+                      function methodChaining(){
+                        d3.select("circle")
+                        .transition()
+                        .duration(2000)
+                        .attr("cx","500px")
+                        .attr("cy","400px")
+                        .attr("r","80px")
+                        .transition()
+                        .duration(2000)
+                        .attr("fill","deeppink")
+                        .attr("stroke","yellow")
+                        .attr("stroke-width","10px")
+                        .transition()
+                        .duration(2000)
+                        .attr("cx","100px")
+                        .attr("cy","100px")
+                        .attr("r","50px")
+                        .attr("fill","yellow")
+                        .attr("stroke","deeppink")
+                        .attr("stroke-width","10px");
+
+                      }
+                      methodChaining();
+                      setInterval(methodChaining,6000);
+
+
 
     </script>
 </body>
