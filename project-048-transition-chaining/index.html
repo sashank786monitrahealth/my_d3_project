@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Demo - Transition Chaining</title>
+</head>
+<body>
+    <script>
+
+      var width=600,height=500;
+      
+      var svg = d3.select("body")
+                  .append("svg")
+                  .attr("width",width)
+                  .attr("height",height)
+                  .style("background-color","chartreuse");
+      var circle = svg.append("circle")
+                      .attr("cx","100px")
+                      .attr("cy","100px")
+                      .attr("r","50px")
+                      .attr("fill","yellow")
+                      .attr("stroke","deeppink")
+                      .attr("stroke-width","10px");
+
+      d3.select("circle")
+        .transition()
+        .duration(2000)
+        .attr("cx","500px")
+        .attr("cy","400px")
+    </script>
+</body>
+</html>
