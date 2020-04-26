@@ -31,10 +31,10 @@
                      .data(numbers);
         bars.enter()
             .append("div")
-            .style("width","5px")
-            .transition()
-            .duration(1000)
-            .style("width",function(d){return (d*20)+"px";})
+            .style("width","5px").style("opacity",0)
+            .transition().delay(function(d,i){return i*500;})
+            .duration(5000)
+            .style("width",function(d){return (d*20)+"px";}).style("opacity",1)
             .text(function(d){return d;});
             
 
