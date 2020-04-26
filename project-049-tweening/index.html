@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo-Tweening</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+    #content{
+        width:80px;
+        height: 60px;
+        background-color:gray;
+        color:white;
+        font-size:20px;
+        text-align: center;
+        margin-bottom:20px;
+
+    }
+    </style>
+</head>
+<body>
+    <input type="text" id="content" value="0" disabled />
+    <br/>
+    <button onclick="showNumbers();">Show</button>
+    
+<script>
+
+function showNumbers(){
+    d3.select("#content")
+      .transition()
+      .duration(10000)
+      //.attr("value",100)
+      .attrTween("value",function(){
+          var numbers = d3.interpolateRound(0,100)
+          return function(i){return numbers(i);};
+      });
+}
+</script>
+</body>
+</html>
