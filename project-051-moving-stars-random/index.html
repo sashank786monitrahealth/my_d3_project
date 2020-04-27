@@ -27,7 +27,7 @@
         function movingStars(svg){
             var star = d3.symbol().type(d3.symbolStar).size(500);
             var positions = decidePositions(25);
-            console.log(positions);
+            //console.log(positions);
             var initialPosition = svg.selectAll("path")
                                      .data(positions);
 
@@ -52,6 +52,7 @@
                              .append("g");
 
         movingStars(svgContainer);
+        setInterval(function(){return movingStars(svgContainer);},10000);
 
     </script>
 </body>
