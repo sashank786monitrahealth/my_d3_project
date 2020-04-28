@@ -8,6 +8,12 @@
     <script src="https://d3js.org/d3.v5.min.js">
     
     </script>
+    <style>
+    circle{
+        stroke:black;
+        stroke-width: 2px;
+    }
+    </style>
 </head>
 <body>
     <script>
@@ -19,7 +25,19 @@
                 .style("background-color","lime");
 
     var svgGroup = svg.append("g").attr("transform","translate(40,40)");
-    
+
+    var circleData = [{
+        x:200,
+        y:200,
+        radius:100
+    }]
+
+    var circle = svgGroup.selectAll("circle").data(circleData).enter()
+                         .append("circle")
+                         .attr("cy",function(d){return d.x;})
+                         .attr("cx",function(d){return d.y;})
+                         .attr("r",function(d){return d.radius;})
+                         .attr("fill","yellow")
 </script>
 </body>
 </html>
