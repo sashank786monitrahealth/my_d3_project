@@ -24,20 +24,34 @@
                 .attr("height",height)
                 .style("background-color","lime");
 
-    var svgGroup = svg.append("g").attr("transform","translate(40,40)");
+    var svgGroup = svg.append("g").attr("transform","translate(0,0)");
 
     var circleData = [{
         x:200,
         y:200,
-        radius:100
-    }]
+        radius:100,
+        color:"yellow",
+        },
+        {
+        x:160,
+        y:175,
+        radius:10,
+        color:"black",
+        },
+        {
+        x:230,
+        y:175,
+        radius:10,
+        color:"black",
+        }
+        ]
 
     var circle = svgGroup.selectAll("circle").data(circleData).enter()
                          .append("circle")
-                         .attr("cy",function(d){return d.x;})
-                         .attr("cx",function(d){return d.y;})
+                         .attr("cx",function(d){return d.x;})
+                         .attr("cy",function(d){return d.y;})
                          .attr("r",function(d){return d.radius;})
-                         .attr("fill","yellow")
+                         .attr("fill",function(d){return d.color;})
 </script>
 </body>
 </html>
