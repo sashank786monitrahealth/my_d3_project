@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo- Pie Chart with Legend</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+.inside{
+    font-size:25px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    fill:white;
+}
+.legends{
+    font-size:25px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+    
+<script type="text/javascript">
+    var width = 750, height = 600;
+
+    var colors = d3.scaleOrdinal(d3.schemeDark2);
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width",width)
+                .attr("height",height)
+                .style("background-color","lime");
+
+    var details = [
+                    {grade:"A+", number:8},
+                    {grade:"A", number:21},
+                    {grade:"B", number:15},
+                    {grade:"C", number:29},
+                    {grade:"D", number:11},
+                    {grade:"F", number:6},
+                  ];            
+
+     var data = d3.pie().sort(null).value(function(d){return d.number})(details);
+     console.log(data);
+
+     var segments = d3.arc()
+                               .innerRadius(0)
+                               .outerRadius(200)
+                               .padAngle(0.05)
+                               .padRadius(50)
+                            ;
+     var sections = svg.append("g")
+                       .attr("transform","translate(250,250)")
+                       .selectAll("path")
+                       .data(data)
+                       .attr("d",segments);
+
+     sections.enter()
+             .append("path")
+             .attr("d",segments)
+             .attr("fill",function(d){return colors(d.data.number)})
+             .on("mouseover", function(){d3.select(this).transition().duration(5).attr("fill","grey")})
+             .on("mouseout", function(){d3.select(this).transition().duration(5)
+                                          .attr("fill",function(d){return colors(d.data.number)})
+                                       })
+             .on("mousedown", function(d){
+                 var total = d3.sum(details.map(function(d){return d.number;})
+                 );
+                 console.log(d);
+                 var currNum = d.data.number;
+                 var percent = Math.round(currNum/total*10000)/100;
+                 console.log("percent = "+percent);
+                 
+             })
+             ;
+
+     var content = d3.select("g")
+                     .selectAll("text")
+                     .data(data);
+
+     content.enter()
+            .append("text")
+            .classed("inside",true)
+            .each(function(d){
+                var center = segments.centroid(d);
+                d3.select(this)
+                  .attr("x", center[0])
+                  .attr("y", center[1])
+                  .text(d.data.number)
+                  .attr("dx","-10px");
+                  
+            })
+
+     var legends = svg.append("g")
+                      .attr("transform","translate(500,100)")
+                      .selectAll(".legends")
+                      .data(data);
+
+     var legend = legends.enter()
+                         .append("g")
+                         .classed("legends",true)
+                         .attr("transform",function(d,i){return "translate(0,"+((i+1)*30)+")";});
+
+     legend.append("rect").attr("width",20).attr("height",20)
+                          .attr("fill",function(d){return colors(d.data.number);});
+
+     legend.append("text").text(function(d){return d.data.grade;})
+                          .attr("fill",function(d){return colors(d.data.number);})
+                          .attr("x",30)
+                          .attr("y",20);
+    
+</script>
+</body>
+</html>
