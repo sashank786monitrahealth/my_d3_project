@@ -83,13 +83,16 @@
                  var position = d3.mouse(svg.node())
                  console.log(position);
 
-                 d3.select("body").append("div")
+                 var sectionToolTip = d3.select("body").append("div")
                                   .classed("tooltip",true)
-                                  .style("left",position[0] + "px")
+                                  .style("left",position[0]+20+ "px")
                                   .style("top",position[1] + "px")
                                   .html(d.data.grade+":"+percent+"%");
+                 
+                 //sectionToolTip.on("mouseup", function(){d3.select(".tooltip").remove();});
+                 
              })
-             ;
+             .on("mouseup", function(){d3.selectAll(".tooltip").remove();});
 
      var content = d3.select("g")
                      .selectAll("text")
