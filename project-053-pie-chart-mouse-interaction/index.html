@@ -17,6 +17,13 @@
     font-size:25px;
     font-weight:bold;
 }
+.tooltip{
+    position:absolute;
+    background-color: silver;
+    color: white;
+    font-size:25px;
+    padding:5px;
+}
 </style>
 
 </head>
@@ -68,11 +75,19 @@
              .on("mousedown", function(d){
                  var total = d3.sum(details.map(function(d){return d.number;})
                  );
-                 console.log(d);
+                 //console.log(d);
                  var currNum = d.data.number;
                  var percent = Math.round(currNum/total*10000)/100;
-                 console.log("percent = "+percent);
+                 //console.log("percent = "+percent);
                  
+                 var position = d3.mouse(svg.node())
+                 console.log(position);
+
+                 d3.select("body").append("div")
+                                  .classed("tooltip",true)
+                                  .style("left",position[0] + "px")
+                                  .style("top",position[1] + "px")
+                                  .html(d.data.grade+":"+percent+"%");
              })
              ;
 
