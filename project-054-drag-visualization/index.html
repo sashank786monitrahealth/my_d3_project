@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo - D3 Drag Visualizations</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    <script>
+      
+      var width = 600, height=500;
+
+      function decidePositions(n){
+           var arr =[];
+           for(var i=0; i<n;i++){
+               arr.push({
+                   x:Math.random()*width,
+                   y:Math.random()*height
+               });  
+           }
+
+           return arr;
+      }
+    
+      var svg = d3.select("body")
+                  .append("svg")
+                  .attr("width",width)
+                  .attr("height",height)
+                  .style("background-color","lime");
+
+      var positions  = decidePositions(20);
+      console.log(positions);
+
+
+      var circles = svg.selectAll("circle")
+                       .data(positions);
+
+      var colors = d3.scaleOrdinal(d3.schemePaired);
+
+      circles.enter()
+                 .append("circle")
+                 .attr("cx",function(d){return d.x;})
+                 .attr("cy",function(d){return d.y;})
+                 .attr("r",25)
+                 .attr("fill", function(d,i){return colors(i);});
+
+    </script>
+</body>
+</html>
