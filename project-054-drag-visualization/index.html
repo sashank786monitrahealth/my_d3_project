@@ -6,6 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Demo - D3 Drag Visualizations</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+    .changing{
+        fill:white;
+        stroke:black;
+        stroke-width:4;
+    }
+    </style>
 </head>
 
 <body>
@@ -43,7 +50,10 @@
 
 
       var drag = d3.drag()
-                   .on("drag",moving);
+                   .on("drag",moving)
+                   .on("start", started)
+                   .on("end",over);
+
       circles.enter()
                  .append("circle")
                  .attr("cx",function(d){return d.x;})
@@ -56,7 +66,17 @@
          d3.select(this).attr("cx",d3.event.x)
                         .attr("cy",d3.event.y);
          
-         
+
+    }
+
+    function started(){
+       d3.select(this)
+         .classed("changing",true);
+    }
+
+    function over(){
+       d3.select(this)
+         .classed("changing",false);
     }
 
     </script>
