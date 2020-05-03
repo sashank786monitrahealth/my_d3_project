@@ -12,9 +12,17 @@
       height:30px;
       text-align:center;
       margin:10px;
-      background:pink;
-      color:red;
+      background:lightgreen;
+      color:dodgerblue;
       line-height: 30px;
+  }
+
+  .names{
+      height:30px;
+      line-height: 30px;
+      margin: 10px;
+      color: violet;
+      position:absolute;
   }
 </style>
 <body>
@@ -31,6 +39,11 @@
                     .classed("bar",true)
                     .style("width",function(d){return d.Age*10+"px";})
                     .text(function(d){return d.Age});
+
+        bars.enter().append("div").classed("names",true)
+        .style("left",function(d){return (d.Age*10+15)+"px"})
+        .style("top", function(d,i){return (i*40)+"px";})
+        .text(function(d){return d.Name});
     })
 </script>
 </body>
