@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo - Read from XML</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    
+    <script type="text/javascript">
+        d3.xml("http://localhost:8000/data.xml").then(function(dataXML){ 
+
+            var dataValues = dataXML.documentElement.getElementsByTagName("radius");
+            console.log(dataValues);
+
+            var height=600, width=600;
+
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width",width)
+                        .attr("height",height);
+
+            var circles = d3.select("svg")
+                            .selectAll("circle")
+                            .data(dataValues);
+
+            circles.enter()
+                   .append("circle")
+                   .attr("r", function(d){ return d.textContent;})
+                   .attr("cx", function(d,i){return ((i+1)*80)+"px";})
+                   .attr("cy", function(d,i){return ((i+1)*80)+"px";})
+                   .attr("fill", function(d,i){return i%2?"lime":"violet";});
+
+
+
+            
+
+        })
+    </script>
+</body>
+</html>
