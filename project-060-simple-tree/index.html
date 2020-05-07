@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Layout - Tree Simple</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+     
+    <svg width="500" height="500">
+        <g>
+           <g id="circles"></g>
+           <g id="lines"></g>
+        </g>
+    </svg>
+
+   <script type="text/javascript">
+      var data = {
+          "name":"1",
+           "children":[
+               {"name":"1.1","children":[
+                   {"name":"1.1.1"},{"name":"1.1.2"},{"name":"1.1.3"}]},
+               {"name":"1.2"}]
+      }
+
+      var dataStructure = d3.hierarchy(data);
+      console.log(dataStructure);
+   </script> 
+</body>
+</html>
