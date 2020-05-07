@@ -27,6 +27,13 @@
 
       var dataStructure = d3.hierarchy(data);
       console.log(dataStructure);
+
+      var treeLayout = d3.tree()
+                         .size([400,200]);
+      
+      var information = treeLayout(dataStructure);
+      console.log(information);
+                         
    </script> 
 </body>
 </html>
