@@ -32,7 +32,18 @@
                          .size([400,200]);
       
       var information = treeLayout(dataStructure);
-      console.log(information);
+      console.log(information.descendants());
+
+      let circles = d3.select("svg g#circles")
+        .selectAll("circle")
+        .data(information.descendants());
+
+      circles.enter()
+             .append("circle")
+             .attr("cx",function(d){return d.x;})
+             .attr("cy",function(d){return d.y;})
+             .attr("r",5);
+
                          
    </script> 
 </body>
