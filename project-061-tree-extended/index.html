@@ -62,8 +62,8 @@ line{
       content.enter()
              .append("text")
              .text(function(d){return d.data.name;})
-             .attr("x",function(d){return d.y+10;})
-             .attr("y",function(d){return d.x+5;})
+             .attr("x",function(d){return d.y-15;})
+             .attr("y",function(d){return d.x-15;})
 
       var connections = d3.select("g #lines")
                           .selectAll("line")
