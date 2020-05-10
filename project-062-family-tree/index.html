@@ -57,6 +57,28 @@ circle{
            .attr("cy",function(d){return d.y;})
            .attr("r",5);
     
+    let connections = svg.append("g")
+                         .selectAll("path")
+                         .data(information.links());
+
+    connections.enter().append("path")
+                       .attr("d",function(d){
+                             return "M"+d.source.x
+                                       +","
+                                       +d.source.y
+                                       +" C "
+                                       +d.source.x
+                                       +","
+                                       +(d.source.y+d.target.y)/2
+                                       +" "
+                                       +d.target.x
+                                       +","
+                                       +(d.source.y+d.target.y)/2
+                                       +" "
+                                       +d.target.x
+                                       +","
+                                       +d.target.y;
+                       });
 
     </script>
 </body>
