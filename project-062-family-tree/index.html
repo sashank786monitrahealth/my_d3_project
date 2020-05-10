@@ -51,7 +51,7 @@ path{
                           
     let information = treeStructure(dataStructure);
     console.log("information");
-    console.log(information);
+    console.log(information.descendants());
 
     let circles = svg.append("g")
                      .selectAll("circle")
@@ -85,6 +85,15 @@ path{
                                        +","
                                        +d.target.y;
                        });
+
+    let names = svg.append("g")
+                   .selectAll("text")
+                   .data(information.descendants());
+
+    names.enter().append("text")
+                 .text(function(d){return d.data.child;})
+                 .attr("x",function(d){return d.x+10;})
+                 .attr("y",function(d){return d.y+10;})
 
     </script>
 </body>
