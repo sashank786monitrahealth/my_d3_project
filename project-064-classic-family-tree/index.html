@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Demo-Family-Tree</title>
+    <title>Demo - Classic Family-Tree</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 <style>
-circle{
-    fill:dodgerblue;
+rect{
+    fill:none;
+    stroke:silver;
+    width:80px;
+    height:40px;
 }
 
 path{
@@ -30,22 +33,22 @@ path{
                 .append("g")
                 .attr("transform","translate(50,50)");
     
-    let data = [{"child":"John", "parent":""},
-                {"child":"Aaron", "parent":"Kevin"},
-                {"child":"Kevin", "parent":"John"},
-                {"child":"Hannah", "parent":"Ann"},
-                {"child":"Rose", "parent":"Sarah"},
-                {"child":"Ann", "parent":"John"},
-                {"child":"Sarah", "parent":"Kevin"},
-                {"child":"Mark", "parent":"Ann"},
-                {"child":"Angel", "parent":"Sarah"},
-                {"child":"Tom", "parent":"Hannah"},
-                {"child":"Emily", "parent":"Hannah"},
+    let data = [{"id":1, "parentID":null,"child":"John", "parent":""},
+                {"id":2, "parentID":3,"child":"John", "parent":"Kevin"},
+                {"id":3, "parentID":1,"child":"Kevin", "parent":"John"},
+                {"id":4, "parentID":6,"child":"Hannah", "parent":"Ann"},
+                {"id":5, "parentID":7,"child":"Rose", "parent":"Sarah"},
+                {"id":6, "parentID":1,"child":"Ann", "parent":"John"},
+                {"id":7, "parentID":3,"child":"Sarah", "parent":"Kevin"},
+                {"id":8, "parentID":6,"child":"Mark", "parent":"Ann"},
+                {"id":9, "parentID":7,"child":"Angel", "parent":"Sarah"},
+                {"id":10, "parentID":4,"child":"Tom", "parent":"Hannah"},
+                {"id":11, "parentID":4,"child":"Emily", "parent":"Hannah"},
                ];
 
     let dataStructure = d3.stratify()
-                        .id(function(d){return d.child;})
-                        .parentId(function(d){return d.parent;})
+                        .id(function(d){return d.id;})
+                        .parentId(function(d){return d.parentID;})
                         (data);
 
     let treeStructure = d3.tree()
@@ -55,14 +58,14 @@ path{
     console.log("information");
     console.log(information.descendants());
 
-    let circles = svg.append("g")
-                     .selectAll("circle")
+    let rectangles = svg.append("g")
+                     .selectAll("rect")
                      .data(information.descendants());
 
-    circles.enter()
-           .append("circle")
-           .attr("cx",function(d){return d.x;})
-           .attr("cy",function(d){return d.y;})
+    rectangles.enter()
+           .append("rect")
+           .attr("x",function(d){return d.x;})
+           .attr("y",function(d){return d.y;})
            .attr("r",5);
     
     let connections = svg.append("g")
