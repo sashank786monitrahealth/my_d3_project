@@ -13,6 +13,7 @@ rect{
     stroke:silver;
     width:80px;
     height:40px;
+    stroke-width:2px;
 }
 
 path{
@@ -20,11 +21,16 @@ path{
     stroke:blueviolet;
     stroke-width: 3px;
 }
+
+text{
+    dominant-baseline:middle;
+    text-anchor: middle;
+}
 </style>
 <body>
     
     <script type="text/javascript">
-    let width = 600 , height =600;
+    let width = 800 , height =600;
 
     let svg = d3.select("body")
                 .append("svg")
@@ -52,7 +58,7 @@ path{
                         (data);
 
     let treeStructure = d3.tree()
-                          .size([500,300]);
+                          .size([650,300]);
                           
     let information = treeStructure(dataStructure);
     console.log("information");
@@ -97,8 +103,8 @@ path{
 
     names.enter().append("text")
                  .text(function(d){return d.data.child;})
-                 .attr("x",function(d){return d.x+10;})
-                 .attr("y",function(d){return d.y+10;})
+                 .attr("x",function(d){return d.x;})
+                 .attr("y",function(d){return d.y;})
 
     </script>
 </body>
