@@ -64,8 +64,8 @@ path{
 
     rectangles.enter()
            .append("rect")
-           .attr("x",function(d){return d.x;})
-           .attr("y",function(d){return d.y;})
+           .attr("x",function(d){return d.x-40;})
+           .attr("y",function(d){return d.y-20;})
            .attr("r",5);
     
     let connections = svg.append("g")
