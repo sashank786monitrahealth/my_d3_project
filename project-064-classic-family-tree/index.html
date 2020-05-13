@@ -19,7 +19,7 @@ rect{
 path{
     fill:none;
     stroke:blueviolet;
-    stroke-width: 3px;
+    stroke-width: 2px;
 }
 
 text{
@@ -83,18 +83,13 @@ text{
                              return "M"+d.source.x
                                        +","
                                        +d.source.y
-                                       +" C "
-                                       +d.source.x
-                                       +","
-                                       +(d.source.y+d.target.y)/2
-                                       +" "
+                                       +" v "
+                                       +50
+                                       +" H "
                                        +d.target.x
-                                       +","
-                                       +(d.source.y+d.target.y)/2
-                                       +" "
-                                       +d.target.x
-                                       +","
-                                       +d.target.y;
+                                       +" V "
+                                       +d.target.y
+                                       ;
                        });
 
     let names = svg.append("g")
