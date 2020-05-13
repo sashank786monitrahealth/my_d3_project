@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo - Classic Family-Tree - Spouse</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<style>
+rect{
+    fill:white;
+    stroke:silver;
+    width:80px;
+    height:40px;
+    stroke-width:2px;
+}
+
+path{
+    fill:none;
+    stroke:blueviolet;
+    stroke-width: 2px;
+}
+
+text{
+    dominant-baseline:middle;
+    text-anchor: middle;
+}
+
+.bigger{
+    font-size:20px;
+}
+
+#details{
+    position: absolute;
+    left:320px;
+    top:120px;
+    width: 100px;
+    height: 30px;
+    background:gray;
+    color: white;
+    visibility: hidden;
+    border-radius: 15px;
+    text-align: center;
+    padding: 15px;
+    font-size:20px;
+}
+</style>
+<body>
+
+    <div id="details"></div>
+    
+    <script type="text/javascript">
+    let width = 800 , height =600;
+
+    let svg = d3.select("body")
+                .append("svg")
+                .attr("width",width)
+                .attr("height",height)
+                .append("g")
+                .attr("transform","translate(50,50)");
+    
+    let data = [{"id":1, "parentID":null,"child":"John", "parent":"", "spouse":"Isabella"},
+                {"id":2, "parentID":3,"child":"John", "parent":"Kevin", "spouse":"Fathima"},
+                {"id":3, "parentID":1,"child":"Kevin", "parent":"John", "spouse":"Jeniffer"},
+                {"id":4, "parentID":6,"child":"Hannah", "parent":"Ann", "spouse":"Raul"},
+                {"id":5, "parentID":7,"child":"Rose", "parent":"Sarah", "spouse":"Krishna"},
+                {"id":6, "parentID":1,"child":"Ann", "parent":"John", "spouse":"Ram"},
+                {"id":7, "parentID":3,"child":"Sarah", "parent":"Kevin", "spouse":"Steve"},
+                {"id":8, "parentID":6,"child":"Mark", "parent":"Ann", "spouse":"Maria"},
+                {"id":9, "parentID":7,"child":"Angel", "parent":"Sarah", "spouse":"Nischal"},
+                {"id":10, "parentID":4,"child":"Tom", "parent":"Hannah", "spouse":"Monica"},
+                {"id":11, "parentID":4,"child":"Emily", "parent":"Hannah", "spouse":"Gregory"},
+               ];
+
+    let dataStructure = d3.stratify()
+                        .id(function(d){return d.id;})
+                        .parentId(function(d){return d.parentID;})
+                        (data);
+
+    let treeStructure = d3.tree()
+                          .size([650,300]);
+                          
+    let information = treeStructure(dataStructure);
+    console.log("information");
+    console.log(information.descendants());
+
+
+    let connections = svg.append("g")
+                         .selectAll("path")
+                         .data(information.links());
+
+    connections.enter().append("path")
+                       .attr("d",function(d){
+                             return "M"+d.source.x
+                                       +","
+                                       +d.source.y
+                                       +" v "
+                                       +50
+                                       +" H "
+                                       +d.target.x
+                                       +" V "
+                                       +d.target.y
+                                       ;
+                       });
+
+    let rectangles = svg.append("g")
+                     .selectAll("rect")
+                     .data(information.descendants());
+
+
+    rectangles.enter()
+           .append("rect")
+           .attr("x",function(d){return d.x-40;})
+           .attr("y",function(d){return d.y-20;})
+           .attr("r",5)
+           .on("mousedown",function(d){
+               d3.select("#details")
+                 .style("visibility","visible")
+                 .html(function(){
+                     if (d.data.spouse !=undefined) {
+                         return "Spouse: "+d.data.spouse;
+                     } else {
+                         return "No Spouse.";
+                     }
+                 })
+           })
+           .on("mouseup",function(d){
+               d3.select("#details").style("visibility","hidden");
+           });
+    
+
+    let names = svg.append("g")
+                   .selectAll("text")
+                   .data(information.descendants());
+
+    names.enter().append("text")
+                 .text(function(d){return d.data.child;})
+                 .attr("x",function(d){return d.x;})
+                 .attr("y",function(d){return d.y;})
+                 .classed("bigger",true);
+
+    
+    </script>
+</body>
+</html>
