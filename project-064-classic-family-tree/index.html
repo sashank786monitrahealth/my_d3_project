@@ -64,10 +64,6 @@ text{
     console.log("information");
     console.log(information.descendants());
 
-    let rectangles = svg.append("g")
-                     .selectAll("rect")
-                     .data(information.descendants());
-
 
     let connections = svg.append("g")
                          .selectAll("path")
@@ -86,6 +82,10 @@ text{
                                        +d.target.y
                                        ;
                        });
+
+    let rectangles = svg.append("g")
+                     .selectAll("rect")
+                     .data(information.descendants());
 
 
     rectangles.enter()
