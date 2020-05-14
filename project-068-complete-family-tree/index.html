@@ -120,11 +120,11 @@ image{
     console.log(information.descendants());
 
 
-    let connections = gContainer.append("g")
+    let connections1 = gContainer.append("g")
                          .selectAll("path")
                          .data(information.links());
 
-    connections.enter().append("path")
+    connections1.enter().append("path")
                        .attr("d",function(d){
                              return "M"+(d.source.x -50 )
                                        +","
@@ -139,6 +139,23 @@ image{
                                        +d.target.y
                                        ;
                        });
+
+
+let connections2 = gContainer.append("g")
+                     .selectAll("path")
+                     .data(information.links());
+
+connections2.enter().append("path")
+                   .attr("d",function(d){
+                         return "M"+(d.source.x +50 )
+                                   +","
+                                   +d.source.y
+                                   +" h "
+                                   +110
+                                   +""
+                                   ;
+                   });
+
 
     let rectangles = gContainer.append("g")
                      .selectAll("rect")
