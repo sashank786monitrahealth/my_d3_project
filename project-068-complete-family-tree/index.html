@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo - Classic Family-Tree - Spouse</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<style>
+
+#toZoom
+{
+    fill:none;
+    stroke:none;
+}
+
+rect.shapes{
+    fill:white;
+    stroke:silver;
+    width:120px;
+    height:45px;
+    stroke-width:2px;
+}
+
+path{
+    fill:none;
+    stroke:blueviolet;
+    stroke-width: 2px;
+}
+
+text{
+    dominant-baseline:middle;
+    text-anchor: middle;
+}
+
+.bigger{
+    font-size:20px;
+}
+
+#details{
+    position: absolute;
+    left:250px;
+    top:120px;
+    width: 200px;
+    height: 30px;
+    background:gray;
+    color: white;
+    visibility: hidden;
+    border-radius: 15px;
+    text-align: center;
+    padding: 15px;
+    font-size:20px;
+}
+
+image{
+    width:60px;
+    height: 40px;
+}
+
+.hide{
+    visibility: hidden;
+}
+</style>
+<body>
+
+    <div id="details"></div>
+    
+    <script type="text/javascript">
+    let width = window.innerWidth , height =window.innerHeight;
+
+    let svg = d3.select("body")
+                .append("svg")
+                .attr("width",width)
+                .attr("height",height);
+
+    let gContainer = svg.append("g")
+                .attr("transform","translate(50,50)");
+    
+
+    
+    let data = [{"id":1, "parentID":null,"child":"John", "parent":"", "spouse":"Isabella", "icon":"fl1.png"},
+                {"id":2, "parentID":3,"child":"John", "parent":"Kevin", "spouse":"Fathima", "icon":"fl2.png"},
+                {"id":3, "parentID":1,"child":"Kevin", "parent":"John", "spouse":"Jeniffer", "icon":"fl3.png"},
+                {"id":4, "parentID":6,"child":"Hannah", "parent":"Ann", "spouse":"Raul", "icon":"fl4.png"},
+                {"id":5, "parentID":7,"child":"Rose", "parent":"Sarah", "spouse":"Krishna", "icon":"fl5.png"},
+                {"id":6, "parentID":1,"child":"Ann", "parent":"John", "spouse":"Ram", "icon":"fl1.png"},
+                {"id":7, "parentID":3,"child":"Sarah", "parent":"Kevin", "spouse":"Steve", "icon":"fl2.png"},
+                {"id":8, "parentID":6,"child":"Mark", "parent":"Ann", "spouse":"Maria", "icon":"fl3.png"},
+                {"id":9, "parentID":7,"child":"Angel", "parent":"Sarah", "spouse":"Nischal", "icon":"fl4.png"},
+                {"id":10, "parentID":4,"child":"Tom", "parent":"Hannah", "icon":"fl5.png"},
+                {"id":11, "parentID":4,"child":"Emily", "parent":"Hannah", "spouse":"Gregory", "icon":"fl1.png"},
+               ];
+
+    let zoom = d3.zoom()
+                 .scaleExtent([0.25,30])
+                 .on("zoom",zoomed);
+
+    function zoomed(){
+        gContainer.attr("transform",d3.event.transform);
+    }
+
+    let dataStructure = d3.stratify()
+                        .id(function(d){return d.id;})
+                        .parentId(function(d){return d.parentID;})
+                        (data);
+
+    let treeStructure = d3.tree()
+                          .separation(function(a,b){
+                              if (a.parent === b.parent){
+                                  return 2;
+                              } else {
+                                  return 1.5;
+                              }
+                          })
+                          .size([800,400]);
+                          
+    let information = treeStructure(dataStructure);
+    console.log("information");
+    console.log(information.descendants());
+
+
+    let connections = gContainer.append("g")
+                         .selectAll("path")
+                         .data(information.links());
+
+    connections.enter().append("path")
+                       .attr("d",function(d){
+                             return "M"+(d.source.x -50 )
+                                       +","
+                                       +d.source.y
+                                       +" h "
+                                       +110
+                                       +" v "
+                                       +50
+                                       +" H "
+                                       +d.target.x
+                                       +" V "
+                                       +d.target.y
+                                       ;
+                       });
+
+    let rectangles = gContainer.append("g")
+                     .selectAll("rect")
+                     .data(information.descendants());
+
+
+    rectangles.enter()
+           .append("rect")
+           .classed("shapes",true)
+           .attr("x",function(d){return d.x-100;})
+           .attr("y",function(d){return d.y-20;});
+    
+
+    let spouseRectangles = gContainer.append("g")
+                              .selectAll("rect")
+                              .data(information.descendants());
+
+    spouseRectangles.enter()
+                    .append("rect")
+                    .classed("shapes",true)
+                    .attr("x",function(d){return d.x+100;})
+                    .attr("y",function(d){return d.y-20;})
+                    .classed("hide",function(d){
+                        if(d.data.spouse == undefined){
+                            return true;
+                        } else {
+                            return false;
+                        }
+
+                    })  ;
+
+
+    let pictures = gContainer.append("g")
+                      .selectAll("image")
+                      .data(information.descendants());
+
+    pictures.enter()
+            .append("image")
+            .attr("href",function(d){return "images/"+d.data.icon;})
+            .attr("x",function(d){return d.x -110;})
+            .attr("y",function(d){return d.y -20;})
+
+    let names = gContainer.append("g")
+                   .selectAll("text")
+                   .data(information.descendants());
+
+    names.enter().append("text")
+                 .text(function(d){return d.data.child;})
+                 .attr("x",function(d){return d.x-35;})
+                 .attr("y",function(d){return d.y+5;})
+                 .classed("bigger",true);
+
+let spouseNames = gContainer.append("g")
+               .selectAll("text")
+               .data(information.descendants());
+
+spouseNames.enter().append("text")
+             .text(function(d){return d.data.spouse;})
+             .attr("x",function(d){return d.x+150;})
+             .attr("y",function(d){return d.y+5;})
+             .classed("bigger",true);
+
+
+
+    
+    var rectangle = svg.append("rect")
+                       .attr("id","toZoom")
+                       .attr("width",width)
+                       .attr("height",height)
+                       .attr("pointer-events","all")
+                       .call(zoom);
+    </script>
+</body>
+</html>
