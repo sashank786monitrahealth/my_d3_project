@@ -65,18 +65,21 @@ image{
                 .append("g")
                 .attr("transform","translate(50,50)");
     
-    let data = [{"id":1, "parentID":null,"child":"John", "parent":"", "icon":"fl1.png"},
-                {"id":2, "parentID":3,"child":"John", "parent":"Kevin", "icon":"fl2.png"},
-                {"id":3, "parentID":1,"child":"Kevin", "parent":"John", "icon":"fl3.png"},
-                {"id":4, "parentID":6,"child":"Hannah", "parent":"Ann", "icon":"fl4.png"},
-                {"id":5, "parentID":7,"child":"Rose", "parent":"Sarah", "icon":"fl5.png"},
-                {"id":6, "parentID":1,"child":"Ann", "parent":"John", "icon":"fl1.png"},
-                {"id":7, "parentID":3,"child":"Sarah", "parent":"Kevin", "icon":"fl2.png"},
-                {"id":8, "parentID":6,"child":"Mark", "parent":"Ann", "icon":"fl3.png"},
-                {"id":9, "parentID":7,"child":"Angel", "parent":"Sarah", "icon":"fl4.png"},
-                {"id":10, "parentID":4,"child":"Tom", "parent":"Hannah", "icon":"fl4.png"},
-                {"id":11, "parentID":4,"child":"Emily", "parent":"Hannah", "icon":"fl5.png"},
+
+    
+    let data = [{"id":1, "parentID":null,"child":"John", "parent":"", "spouse":"Isabella", "icon":"fl1.png"},
+                {"id":2, "parentID":3,"child":"John", "parent":"Kevin", "spouse":"Fathima", "icon":"fl2.png"},
+                {"id":3, "parentID":1,"child":"Kevin", "parent":"John", "spouse":"Jeniffer", "icon":"fl3.png"},
+                {"id":4, "parentID":6,"child":"Hannah", "parent":"Ann", "spouse":"Raul", "icon":"fl4.png"},
+                {"id":5, "parentID":7,"child":"Rose", "parent":"Sarah", "spouse":"Krishna", "icon":"fl5.png"},
+                {"id":6, "parentID":1,"child":"Ann", "parent":"John", "spouse":"Ram", "icon":"fl1.png"},
+                {"id":7, "parentID":3,"child":"Sarah", "parent":"Kevin", "spouse":"Steve", "icon":"fl2.png"},
+                {"id":8, "parentID":6,"child":"Mark", "parent":"Ann", "spouse":"Maria", "icon":"fl3.png"},
+                {"id":9, "parentID":7,"child":"Angel", "parent":"Sarah", "spouse":"Nischal", "icon":"fl4.png"},
+                {"id":10, "parentID":4,"child":"Tom", "parent":"Hannah", "icon":"fl5.png"},
+                {"id":11, "parentID":4,"child":"Emily", "parent":"Hannah", "spouse":"Gregory", "icon":"fl1.png"},
                ];
+
 
     let dataStructure = d3.stratify()
                         .id(function(d){return d.id;})
